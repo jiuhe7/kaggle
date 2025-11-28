@@ -102,7 +102,7 @@ def k_fold(k, X_train, y_train, num_epochs, learning_rate, weight_decay,
               f'验证log rmse{float(valid_ls[-1]):f}')
     return train_l_sum / k, valid_l_sum / k
 
-k, num_epochs, lr, weight_decay, batch_size = 5, 100, 5, 0, 64
+k, num_epochs, lr, weight_decay, batch_size = 5, 100, 5, 0.01, 32
 train_l, valid_l = k_fold(k, train_features, train_labels, num_epochs, lr,
                           weight_decay, batch_size)
 print(f'{k}-折验证: 平均训练log rmse: {float(train_l):f}, '
@@ -123,6 +123,6 @@ def train_and_pred(train_features, test_features, train_labels, test_data,
     test_data['SalePrice'] = pd.Series(preds.reshape(1, -1)[0])
     submission = pd.concat([test_data['Id'], test_data['SalePrice']], axis=1)
     submission.to_csv('submission.csv', index=False)
-
+d2l.plt.show()
 train_and_pred(train_features, test_features, train_labels, test_data,
                num_epochs, lr, weight_decay, batch_size)
